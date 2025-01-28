@@ -126,8 +126,8 @@ script.onload = () => {
         frameworkUrl: "Build/Build.framework.js.unityweb",
         codeUrl: "Build/Build.wasm.unityweb",
         streamingAssetsUrl: "StreamingAssets",
-        companyName: "DefaultCompany",
-        productName: "Projeto_P_Cruz",
+        companyName: "SENAC-RS",
+        productName: "Palavras Cruzadas",
         productVersion: "0.1",
     }, (progress) => {
         // Atualizar barra de progresso
