@@ -22,14 +22,5 @@ Para implementar o novo template, siga as orientações abaixo:
                     styles.css
                     thumbnail.png
                     README.md
-
-TESTES EXECUTADOS
-
-Unity2021 - Android - Ok
-Unity2021 - iOS - Ok 
-Unity2021 - Desktop - Ok
-
-Unity6 - Android mais antigos - Error OOM (1ª vez) depois tela preta ao rotacionar ou zoom
-Unity6 - Android mais novos - Tela preta ao rotacionar ou zoom
-Unity6 - iOS - Ok 
-Unity6 - Desktop - Ok
+					AudioManager.cs
+	4) Crie na cena um GameOjcetc com nome de AudioManager e aplique o script AudioManager.cs (presente na paste do template)

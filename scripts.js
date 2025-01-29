@@ -1,17 +1,49 @@
 var unityInstance = null;
 
+let isSoundEnabled = true;
+
 document.addEventListener("DOMContentLoaded", function() {
     const clickSound = document.getElementById("click-sound");
     const buttons = document.querySelectorAll("button");
+    const soundIcon = document.getElementById("sound-icon");
 
     buttons.forEach(button => {
         // Evento de clique para reproduzir o som
         button.addEventListener("click", function() {
-            clickSound.currentTime = 0;  // Rewind to the start
-            clickSound.play();
+            if (isSoundEnabled && this.className !== 'sound-btn') {
+                clickSound.currentTime = 0;  // Rewind to the start
+                clickSound.play();
+            }
         });
     });
+
+    // Inicializa o ícone de som
+    updateSoundIcon();
 });
+
+function toggleSound() {
+    isSoundEnabled = !isSoundEnabled;
+    updateSoundIcon();
+    
+    // Envia mensagem para a Unity
+    if (unityInstance) {
+        // Envia 1 para ativar o som, 0 para desativar
+        unityInstance.SendMessage('AudioManager', 'SetMute', isSoundEnabled ? 0 : 1);
+    }
+}
+
+function updateSoundIcon() {
+    const icon = document.getElementById("sound-icon");
+    // Quando o som está habilitado, mostramos o ícone de mutar
+    // Quando está mudo, mostramos o ícone de som ligado
+    if (isSoundEnabled) {
+        icon.src = "image/sound-off.svg";
+        icon.alt = "Mutar Som";
+    } else {
+        icon.src = "image/sound-on.svg";
+        icon.alt = "Ativar Som";
+    }
+}
 
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -20,17 +52,17 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Calcula a largura do painel e ajusta a posição inicial
     var panelWidth = menuPanel.offsetWidth;
-    menuPanel.style.right = `-${panelWidth}px`;
+    menuPanel.style.left = `-${panelWidth}px`;
 
     menuButton.addEventListener('click', function() {
         if (menuPanel.classList.contains('open')) {
             menuPanel.classList.remove('open');
-            menuPanel.style.right = `-${panelWidth}px`;
-            menuButton.style.right = '0';
+            menuPanel.style.left = `-${panelWidth}px`;
+            menuButton.style.left = '0.5%';
         } else {
             menuPanel.classList.add('open');
-            menuPanel.style.right = '0';
-            menuButton.style.right = `${panelWidth}px`;
+            menuPanel.style.left = '0';
+            menuButton.style.left = `${panelWidth}px`;
         }
     });
 });
@@ -47,9 +79,11 @@ function updateProgressBar(value) {
 function updateButtonIcon() {
     const icon = document.getElementById("fullscreen-icon");
     if (document.fullscreenElement) {
-        icon.src = "image/zoom-out.png";
+        icon.src = "image/fullscreen-exit.svg";
+        icon.alt = "Sair da Tela Cheia";
     } else {
-        icon.src = "image/zoom-in.png";
+        icon.src = "image/fullscreen-enter.svg";
+        icon.alt = "Entrar em Tela Cheia";
     }
 }
 
@@ -135,6 +169,11 @@ script.onload = () => {
     }).then(function (instance) {
         unityInstance = instance;
 
+        // Sincroniza o estado inicial do som
+        if (!isSoundEnabled) {
+            unityInstance.SendMessage('AudioManager', 'SetMute', 1);
+        }
+
         // Ocultar a barra de carregamento quando o conteúdo estiver totalmente carregado
         var loadingBar = document.getElementById("loadingBar");
         if (loadingBar) {
@@ -149,5 +188,3 @@ script.onload = () => {
 };
 // Adicionar o script ao documento
 document.body.appendChild(script);
-
-

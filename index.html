@@ -6,12 +6,22 @@
     <title>SENAC-RS</title>
     <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body id="body">
     <audio id="click-sound" src="sounds/click-sound.mp3" preload="auto"></audio>
+    <div id="rotation-warning">
+        <img src="image/rotate-device.gif" alt="Rotate Device">
+        <p>Por favor, gire seu dispositivo</p><br>
+        <p id="highlight-message">Não esqueça de ativar a rotação de tela</p>
+    </div>
     <div id="unityContainer">
-        <button class="fullscreen-btn" onclick="toggleFullscreen()">
-            <img src="image/zoom-in.png" alt="Fullscreen Toggle" id="fullscreen-icon">
-        </button>
+        <div class="controls-container">
+            <button class="control-btn fullscreen-btn" onclick="toggleFullscreen()">
+                <img src="image/fullscreen-enter.svg" alt="Entrar em Tela Cheia" id="fullscreen-icon">
+            </button>
+            <button class="control-btn sound-btn" onclick="toggleSound()">
+                <img src="image/sound-on.svg" alt="Sound Toggle" id="sound-icon">
+            </button>
+        </div>
         <canvas id="unityCanvas"></canvas>
         <div class="loadingContainer" id="loadingBar">
             <div class="progress-bar">
@@ -27,7 +37,9 @@
         <button id="tritanomalia" onclick="applyFilter('tritanopia')">Tritanomalia</button>
         <button id="normal" onclick="applyFilter('normal')">Sem Daltonismo</button>
     </div>
-    <button id="menu"></button>
+    <button id="menu">
+        <img src="image/settings-gear.svg" alt="Menu de Configurações">
+    </button>
     
     <svg width="0" height="0">
         <defs>
